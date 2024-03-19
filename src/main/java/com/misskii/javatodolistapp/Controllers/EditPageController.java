@@ -8,7 +8,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
-import java.util.Objects;
+import java.sql.Date;
 
 public class EditPageController extends GeneralController {
     @FXML
@@ -37,36 +37,36 @@ public class EditPageController extends GeneralController {
         }
         if (taskDesk.getText().isEmpty()){
             taskDAO.updateTaskByID(currentUser(getUserId())+1 ,taskID.getText(), task.getTaskDescription(),
-                    taskTitle.getText(), taskExp.getText(), status);
+                    taskTitle.getText(), Date.valueOf(taskExp.getText()), status);
         }
         if (taskTitle.getText().isEmpty()){
             taskDAO.updateTaskByID(currentUser(getUserId())+1 ,taskID.getText(), task.getTaskDescription(),
-                    task.getTaskTitle(), taskExp.getText(), status);
+                    task.getTaskTitle(), Date.valueOf(taskExp.getText()), status);
         }
         if (taskExp.getText().isEmpty()){
             taskDAO.updateTaskByID(currentUser(getUserId())+1 ,taskID.getText(), task.getTaskDescription(),
-                    taskTitle.getText(), task.getDueTo(), status);
+                    taskTitle.getText(), task.getDate(), status);
         }
         if (taskDesk.getText().isEmpty() && taskTitle.getText().isEmpty()){
             taskDAO.updateTaskByID(currentUser(getUserId())+1 ,taskID.getText(), task.getTaskDescription(),
-                    task.getTaskTitle(), taskExp.getText(), status);
+                    task.getTaskTitle(), Date.valueOf(taskExp.getText()), status);
         }
         if (taskDesk.getText().isEmpty() && taskExp.getText().isEmpty()){
             taskDAO.updateTaskByID(currentUser(getUserId())+1 ,taskID.getText(), task.getTaskDescription(),
-                    taskTitle.getText(), task.getDueTo(), status);
+                    taskTitle.getText(), task.getDate(), status);
         }
         if (taskTitle.getText().isEmpty() && taskExp.getText().isEmpty()){
             taskDAO.updateTaskByID(currentUser(getUserId())+1 ,taskID.getText(), taskDesk.getText(),
-                    task.getTaskTitle(), task.getDueTo(), status);
+                    task.getTaskTitle(), task.getDate(), status);
         }
         if (taskExp.getText().isEmpty() && taskTitle.getText().isEmpty()
                 && taskDesk.getText().isEmpty()) {
             taskDAO.updateTaskByID(currentUser(getUserId())+1 ,taskID.getText(), task.getTaskDescription(),
-                    task.getTaskTitle(), task.getDueTo(), status);
+                    task.getTaskTitle(), task.getDate(), status);
         }
         if (!taskDesk.getText().isEmpty() && !taskTitle.getText().isEmpty() && !taskExp.getText().isEmpty()){
             taskDAO.updateTaskByID(currentUser(getUserId())+1 ,taskID.getText(), taskDesk.getText(),
-                    taskTitle.getText(), taskExp.getText(), status);
+                    taskTitle.getText(), Date.valueOf(taskExp.getText()), status);
         }
         switchToMainPage(event);
     }

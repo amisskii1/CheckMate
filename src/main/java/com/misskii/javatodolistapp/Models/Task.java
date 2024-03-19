@@ -1,9 +1,11 @@
 package com.misskii.javatodolistapp.Models;
 
+import java.sql.Date;
+
 public class Task {
     private String taskTitle;
     private String taskDescription;
-    private String dueTo;
+    private Date date;
     private int personId;
     private int taskId;
 
@@ -12,11 +14,11 @@ public class Task {
     public Task() {
     }
 
-    public Task(String taskTitle, String taskDescription, String dueTo, int personId, String status){
+    public Task(String taskTitle, String taskDescription, Date date, int personId, String status){
         this.status = status;
         this.taskTitle = taskTitle;
         this.taskDescription = taskDescription;
-        this.dueTo = dueTo;
+        this.date = date;
         this.personId = personId;
     }
 
@@ -36,24 +38,16 @@ public class Task {
         this.taskDescription = taskDescription;
     }
 
-    public String getDueTo() {
-        return dueTo;
+    public Date getDate() {
+        return date;
     }
 
-    public void setDueTo(String dueTo) {
-        this.dueTo = dueTo;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public int getPersonId() {
         return personId;
-    }
-
-    public void setPersonId(int personId) {
-        this.personId = personId;
-    }
-
-    public int getTaskId() {
-        return taskId;
     }
 
     public void setTaskId(int taskId) {
@@ -66,5 +60,9 @@ public class Task {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public int getTaskId() {
+        return taskId;
     }
 }

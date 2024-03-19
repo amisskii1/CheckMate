@@ -13,7 +13,7 @@ public class PersonDAO {
     public void createNewPerson(Person person){
         try {
             PreparedStatement preparedStatement =
-                    connection.prepareStatement("INSERT INTO PERSON (personName, personEmail, personPassword) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+                    connection.prepareStatement("INSERT INTO users (user_name, user_email, user_password) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, person.getName());
             preparedStatement.setString(2, person.getEmail());
             preparedStatement.setString(3, person.getPassword());
@@ -32,14 +32,14 @@ public class PersonDAO {
 
         try {
             Statement statement = connection.createStatement();
-            String SQL = "SELECT * FROM Person";
+            String SQL = "SELECT * FROM users";
             ResultSet resultSet = statement.executeQuery(SQL);
             while(resultSet.next()){
                 Person person = new Person();
-                person.setId(resultSet.getInt("personId"));
-                person.setName(resultSet.getString("personName"));
-                person.setEmail(resultSet.getString("personEmail"));
-                person.setPassword(resultSet.getString("personPassword"));
+                person.setId(resultSet.getInt("user_id"));
+                person.setName(resultSet.getString("user_name"));
+                person.setEmail(resultSet.getString("user_email"));
+                person.setPassword(resultSet.getString("user_password"));
                 people.add(person);
             }
         } catch (SQLException throwables) {

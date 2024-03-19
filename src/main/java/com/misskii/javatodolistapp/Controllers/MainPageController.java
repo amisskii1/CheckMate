@@ -8,6 +8,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import java.io.IOException;
+import java.sql.Date;
 
 public class MainPageController extends GeneralController {
     private int userId;
@@ -20,7 +21,7 @@ public class MainPageController extends GeneralController {
     @FXML
     private TableColumn<Task, String> tableDescription;
     @FXML
-    private TableColumn<Task, String> tableDueTo;
+    private TableColumn<Task, Date> tableDueTo;
     @FXML
     private TableColumn<Task, String> tableStatus;
     TaskDAO taskDAO = new TaskDAO();
@@ -30,7 +31,7 @@ public class MainPageController extends GeneralController {
             tableId.setCellValueFactory(new PropertyValueFactory<Task, Integer>("taskId"));
             tableTitle.setCellValueFactory(new PropertyValueFactory<Task, String>("taskTitle"));
             tableDescription.setCellValueFactory(new PropertyValueFactory<Task, String>("taskDescription"));
-            tableDueTo.setCellValueFactory(new PropertyValueFactory<Task, String>("dueTo"));
+            tableDueTo.setCellValueFactory(new PropertyValueFactory<Task, Date>("date"));
             tableStatus.setCellValueFactory(new PropertyValueFactory<Task, String>("status"));
             table.setItems(taskDAO.selectAllTasksByPersonId(this.userId));
         }
