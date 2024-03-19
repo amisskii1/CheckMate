@@ -9,24 +9,18 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class DBUtil {
-    private static final String DB_DRIVER_CLASS = "jdbc.driver";
-    private static final String URL = "jdbc.url";
-    private static final String USERNAME="jdbc.username";
-    private static final String PASSWORD="jdbc.password";
+    private static final String DB_DRIVER_CLASS =  System.getenv("DATABASE_DRIVER");;
+    private static final String URL = System.getenv("DATABASE_URL");;
+    private static final String USERNAME= System.getenv("DATABASE_USERNAME");;
+    private static final String PASSWORD= System.getenv("DATABASE_PASSWORD");;
 
     private static Connection connection = null;
 
     static{
         try {
-            Properties properties = new Properties();
-            InputStream inputStream = DBUtil.class.getClassLoader().getResourceAsStream("database.properties");
-            if (inputStream == null) {
-                throw new IOException("database.properties file not found");
-            }
-            properties.load(inputStream);
-            Class.forName(properties.getProperty(DB_DRIVER_CLASS));
-            connection = DriverManager.getConnection(properties.getProperty(URL), properties.getProperty(USERNAME), properties.getProperty(PASSWORD));
-        } catch (ClassNotFoundException | SQLException | IOException e) {
+            Class.forName(DB_DRIVER_CLASS);
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
     }
