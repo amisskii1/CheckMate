@@ -11,6 +11,9 @@ import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class GeneralController {
     private int userId;
@@ -84,6 +87,17 @@ public class GeneralController {
         aboutStage.setTitle("About");
         aboutStage.setScene(new Scene(root, 230, 237));
         aboutStage.show();
+    }
+
+    public boolean isValidDate(String input){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        sdf.setLenient(false);
+        try {
+            Date date = sdf.parse(input);
+            return sdf.format(date).equals(input);
+        } catch (ParseException e) {
+            return false;
+        }
     }
 
     public int getUserId() {
