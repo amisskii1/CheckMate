@@ -1,12 +1,8 @@
 package com.misskii.javatodolistapp.Util;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Properties;
 
 public class DBUtil {
     private static final String DB_DRIVER_CLASS =  System.getenv("DATABASE_DRIVER");;

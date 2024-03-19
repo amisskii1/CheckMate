@@ -21,6 +21,10 @@ public class AddPageController extends GeneralController {
     private TextField taskDescription;
 
     public void createNewTask(ActionEvent event) throws IOException {
+        if (!isValidDate(taskDate.getText())){
+            displayError("Date field must be in format yyyy-MM-dd");
+            return;
+        }
         taskDAO.createNewTask(new Task(taskTitle.getText(), taskDescription.getText(), Date.valueOf(taskDate.getText()), currentUser(getUserId()) + 1, "In Progress"));
         switchToMainPage(event);
     }

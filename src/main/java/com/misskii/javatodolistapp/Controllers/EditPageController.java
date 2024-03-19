@@ -29,6 +29,11 @@ public class EditPageController extends GeneralController {
     public void confChangeTask(ActionEvent event) throws IOException {
         if(taskID.getText().isEmpty()){
             displayError("Id field should be filled");
+            return;
+        }
+        if (!isValidDate(taskExp.getText())){
+            displayError("Date field must be in format yyyy-MM-dd");
+            return;
         }
         task = taskDAO.getTaskByID(taskID.getText());
         String status = "In Progress";
