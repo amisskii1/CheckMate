@@ -122,7 +122,7 @@
         <repository>
             <id>github</id>
             <name>GitHub OWNER Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/antonmisskii/todolistapp</url>
+            <url>https://maven.pkg.github.com/amisskii1/todolistapp</url>
         </repository>
     </distributionManagement>
 </project>
