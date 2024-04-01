@@ -3,21 +3,31 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.misskii.javatodolistapp.Controllers.EditPageController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19.0.2.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.misskii.javatodolistapp.Controllers.EditPageController">
    <children>
-      <TextField fx:id="taskID" layoutX="213.0" layoutY="90.0" promptText="Enter Task Id" />
+      <TextField fx:id="taskID" layoutX="209.0" layoutY="103.0" promptText="Enter Task Id" />
       <TextField fx:id="taskTitle" layoutX="211.0" layoutY="143.0" promptText="change title" />
       <TextField fx:id="taskDesk" layoutX="213.0" layoutY="188.0" promptText="change description" />
       <CheckBox fx:id="markDone" layoutX="237.0" layoutY="275.0" mnemonicParsing="false" text="Mark as done" />
       <Button layoutX="172.0" layoutY="309.0" mnemonicParsing="false" onAction="#confChangeTask" text="Confirm" />
-      <Label layoutX="193.0" layoutY="94.0" text="ID:" />
+      <Label layoutX="194.0" layoutY="107.0" text="ID:" />
       <Label layoutX="183.0" layoutY="147.0" text="Title:" />
       <Label layoutX="145.0" layoutY="192.0" text="Description:" />
       <TextField fx:id="taskExp" layoutX="210.0" layoutY="232.0" promptText="change expiration date" />
       <Label layoutX="164.0" layoutY="236.0" text="DueTo:" />
       <Button layoutX="333.0" layoutY="308.0" mnemonicParsing="false" onAction="#cancel" prefHeight="26.0" prefWidth="59.0" text="Cancel" />
+      <RadioButton fx:id="priority1" layoutX="390.0" layoutY="120.0" mnemonicParsing="false" text="1st priority">
+         <toggleGroup>
+            <ToggleGroup fx:id="priority" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton fx:id="priority2" layoutX="389.0" layoutY="147.0" mnemonicParsing="false" text="2cd priority" toggleGroup="$priority" />
+      <RadioButton fx:id="priority3" layoutX="389.0" layoutY="179.0" mnemonicParsing="false" text="3d priority" toggleGroup="$priority" />
+      <RadioButton fx:id="priorityDefault" layoutX="389.0" layoutY="210.0" mnemonicParsing="false" text="default" toggleGroup="$priority" />
    </children>
 </AnchorPane>

@@ -2,10 +2,12 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.misskii.javatodolistapp.Controllers.AddPageController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19.0.2.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.misskii.javatodolistapp.Controllers.AddPageController">
    <children>
       <Button layoutX="167.0" layoutY="272.0" mnemonicParsing="false" onAction="#createNewTask" prefHeight="26.0" prefWidth="83.0" text="Submit" />
       <Button layoutX="351.0" layoutY="272.0" mnemonicParsing="false" onAction="#cancel" prefHeight="26.0" prefWidth="83.0" text="Cancel" />
@@ -15,5 +17,13 @@
       <Label layoutX="152.0" layoutY="178.0" text="Description:" />
       <Label layoutX="174.0" layoutY="219.0" text="Due to:" />
       <TextField fx:id="taskDate" layoutX="225.0" layoutY="215.0" />
+      <RadioButton fx:id="priority1" layoutX="396.0" layoutY="135.0" mnemonicParsing="false" text="1st priority">
+         <toggleGroup>
+            <ToggleGroup fx:id="priority" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton fx:id="priority2" layoutX="396.0" layoutY="165.0" mnemonicParsing="false" text="2cd priority" toggleGroup="$priority" />
+      <RadioButton fx:id="priority3" layoutX="396.0" layoutY="191.0" mnemonicParsing="false" text="3d priority" toggleGroup="$priority" />
+      <RadioButton fx:id="priorityDefault" layoutX="396.0" layoutY="219.0" mnemonicParsing="false" text="default" toggleGroup="$priority" />
    </children>
 </AnchorPane>

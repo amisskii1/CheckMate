@@ -13,12 +13,13 @@ public class TaskDAO {
     public void createNewTask(Task task){
         try {
             PreparedStatement preparedStatement =
-                    connection.prepareStatement("INSERT INTO tasks (task_title, task_description, task_date, task_status, user_id) VALUES (?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+                    connection.prepareStatement("INSERT INTO tasks (task_title, task_description, task_date, task_status, user_id, priority) VALUES (?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, task.getTaskTitle());
             preparedStatement.setString(2, task.getTaskDescription());
             preparedStatement.setDate(3, task.getDate());
             preparedStatement.setString(4, task.getStatus());
             preparedStatement.setInt(5, task.getPersonId());
+            preparedStatement.setString(6, task.getPriorityStatus());
             preparedStatement.executeUpdate();
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
             if(resultSet.next()){
@@ -29,17 +30,18 @@ public class TaskDAO {
         }
     }
 
-    public void updateTaskByID(int personId,String id, String description, String title, Date date, String status){
+    public void updateTaskByID(int personId,String id, String description, String title, Date date, String status, String priority){
         try {
             int taskId = Integer.parseInt(id);
             PreparedStatement preparedStatement =
-                    connection.prepareStatement("UPDATE tasks SET task_title=?, task_description=?, task_date=?, task_status=? WHERE tasks.task_id=? AND tasks.user_id=?");
+                    connection.prepareStatement("UPDATE tasks SET task_title=?, task_description=?, task_date=?, task_status=?, priority=? WHERE tasks.task_id=? AND tasks.user_id=?");
             preparedStatement.setString(1, description);
             preparedStatement.setString(2, title);
             preparedStatement.setDate(3, date);
             preparedStatement.setString(4, status);
-            preparedStatement.setInt(5, taskId);
-            preparedStatement.setInt(6, personId);
+            preparedStatement.setString(5, priority);
+            preparedStatement.setInt(6, taskId);
+            preparedStatement.setInt(7, personId);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -50,7 +52,7 @@ public class TaskDAO {
         ObservableList<Task> observableList = FXCollections.observableArrayList();
         try {
             PreparedStatement preparedStatement =
-                    connection.prepareStatement("SELECT task_id, task_title, task_description, task_date, task_status from tasks JOIN users ON tasks.user_id=users.user_id WHERE tasks.user_id=?");
+                    connection.prepareStatement("SELECT task_id, task_title, task_description, task_date, task_status, priority from tasks JOIN users ON tasks.user_id=users.user_id WHERE tasks.user_id=?");
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
@@ -60,6 +62,7 @@ public class TaskDAO {
                 task.setTaskDescription(resultSet.getString("task_description"));
                 task.setDate(resultSet.getDate("task_date"));
                 task.setStatus(resultSet.getString("task_status"));
+                task.setPriorityStatus(resultSet.getString("priority"));
                 observableList.add(task);
             }
         } catch (SQLException throwables) {
@@ -88,4 +91,21 @@ public class TaskDAO {
         }
         return task;
     }
+
+    public String selectPriorityByTaskID(int id){
+        String priority = "default";
+        try {
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement("SELECT priority from tasks WHERE tasks.task_id=?");
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                priority = resultSet.getString("priority");
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return priority;
+    }
+
 }

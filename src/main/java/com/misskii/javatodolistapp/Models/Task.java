@@ -8,18 +8,19 @@ public class Task {
     private Date date;
     private int personId;
     private int taskId;
-
     private String status;
+    private String priorityStatus;
 
     public Task() {
     }
 
-    public Task(String taskTitle, String taskDescription, Date date, int personId, String status){
+    public Task(String taskTitle, String taskDescription, Date date, int personId, String status, String priorityStatus){
         this.status = status;
         this.taskTitle = taskTitle;
         this.taskDescription = taskDescription;
         this.date = date;
         this.personId = personId;
+        this.priorityStatus = priorityStatus;
     }
 
     public String getTaskTitle() {
@@ -64,5 +65,13 @@ public class Task {
 
     public int getTaskId() {
         return taskId;
+    }
+
+    public String getPriorityStatus() {
+        return priorityStatus;
+    }
+
+    public void setPriorityStatus(String priorityStatus) {
+        this.priorityStatus = priorityStatus;
     }
 }

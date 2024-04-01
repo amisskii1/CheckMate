@@ -5,12 +5,16 @@ import com.misskii.javatodolistapp.Models.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 
 import java.io.IOException;
 import java.sql.Date;
 
 public class EditPageController extends GeneralController {
+    @FXML
+    public ToggleGroup priority;
     @FXML
     private TextField taskID;
     @FXML
@@ -21,6 +25,15 @@ public class EditPageController extends GeneralController {
     private TextField taskExp;
     @FXML
     private CheckBox markDone;
+    @FXML
+    private RadioButton priority1;
+    @FXML
+    private RadioButton priority2;
+    @FXML
+    private RadioButton priority3;
+    @FXML
+    private RadioButton priorityDefault;
+
     private TaskDAO taskDAO = new TaskDAO();
 
     private Task task;
@@ -42,38 +55,49 @@ public class EditPageController extends GeneralController {
         }
         if (taskDesk.getText().isEmpty()){
             taskDAO.updateTaskByID(currentUser(getUserId())+1 ,taskID.getText(), task.getTaskDescription(),
-                    taskTitle.getText(), Date.valueOf(taskExp.getText()), status);
+                    taskTitle.getText(), Date.valueOf(taskExp.getText()), status, setPriority());
         }
         if (taskTitle.getText().isEmpty()){
             taskDAO.updateTaskByID(currentUser(getUserId())+1 ,taskID.getText(), task.getTaskDescription(),
-                    task.getTaskTitle(), Date.valueOf(taskExp.getText()), status);
+                    task.getTaskTitle(), Date.valueOf(taskExp.getText()), status, setPriority());
         }
         if (taskExp.getText().isEmpty()){
             taskDAO.updateTaskByID(currentUser(getUserId())+1 ,taskID.getText(), task.getTaskDescription(),
-                    taskTitle.getText(), task.getDate(), status);
+                    taskTitle.getText(), task.getDate(), status, setPriority());
         }
         if (taskDesk.getText().isEmpty() && taskTitle.getText().isEmpty()){
             taskDAO.updateTaskByID(currentUser(getUserId())+1 ,taskID.getText(), task.getTaskDescription(),
-                    task.getTaskTitle(), Date.valueOf(taskExp.getText()), status);
+                    task.getTaskTitle(), Date.valueOf(taskExp.getText()), status, setPriority());
         }
         if (taskDesk.getText().isEmpty() && taskExp.getText().isEmpty()){
             taskDAO.updateTaskByID(currentUser(getUserId())+1 ,taskID.getText(), task.getTaskDescription(),
-                    taskTitle.getText(), task.getDate(), status);
+                    taskTitle.getText(), task.getDate(), status, setPriority());
         }
         if (taskTitle.getText().isEmpty() && taskExp.getText().isEmpty()){
             taskDAO.updateTaskByID(currentUser(getUserId())+1 ,taskID.getText(), taskDesk.getText(),
-                    task.getTaskTitle(), task.getDate(), status);
+                    task.getTaskTitle(), task.getDate(), status, setPriority());
         }
         if (taskExp.getText().isEmpty() && taskTitle.getText().isEmpty()
                 && taskDesk.getText().isEmpty()) {
             taskDAO.updateTaskByID(currentUser(getUserId())+1 ,taskID.getText(), task.getTaskDescription(),
-                    task.getTaskTitle(), task.getDate(), status);
+                    task.getTaskTitle(), task.getDate(), status, setPriority());
         }
         if (!taskDesk.getText().isEmpty() && !taskTitle.getText().isEmpty() && !taskExp.getText().isEmpty()){
             taskDAO.updateTaskByID(currentUser(getUserId())+1 ,taskID.getText(), taskDesk.getText(),
-                    taskTitle.getText(), Date.valueOf(taskExp.getText()), status);
+                    taskTitle.getText(), Date.valueOf(taskExp.getText()), status, setPriority());
         }
         switchToMainPage(event);
+    }
+
+    public String setPriority(){
+        if (priority1.isSelected()){
+            return "priority1";
+        } else if (priority2.isSelected()) {
+            return "priority2";
+        } else if (priority3.isSelected()) {
+            return "priority3";
+        }
+        return "default";
     }
 
     public void cancel(ActionEvent event) throws IOException {
