@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane prefHeight="237.0" prefWidth="230.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.misskii.javatodolistapp.Controllers.AboutController">
+<AnchorPane prefHeight="237.0" prefWidth="230.0" xmlns="http://javafx.com/javafx/19.0.2.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.misskii.javatodolistapp.Controllers.AboutController">
    <children>
       <TextField fx:id="author" layoutX="100.0" layoutY="74.0" prefHeight="26.0" prefWidth="93.0" text="Anton Misskii" />
       <TextField fx:id="actualVersion" layoutX="100.0" layoutY="119.0" prefHeight="26.0" prefWidth="94.0" />

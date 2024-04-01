@@ -36,8 +36,20 @@ public class AddPageController extends GeneralController {
             displayError("Date field must be in format yyyy-MM-dd");
             return;
         }
-        taskDAO.createNewTask(new Task(taskTitle.getText(), taskDescription.getText(), Date.valueOf(taskDate.getText()), currentUser(getUserId()) + 1, "In Progress"));
+        taskDAO.createNewTask(new Task(taskTitle.getText(), taskDescription.getText(), Date.valueOf(taskDate.getText()),
+                currentUser(getUserId()) + 1, "In Progress", setPriority()));
         switchToMainPage(event);
+    }
+
+    public String setPriority(){
+        if (priority1.isSelected()){
+            return "priority1";
+        } else if (priority2.isSelected()) {
+            return "priority2";
+        } else if (priority3.isSelected()) {
+            return "priority3";
+        }
+        return "default";
     }
 
     public void cancel(ActionEvent event) throws IOException {

@@ -5,7 +5,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="394.0" prefWidth="635.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.misskii.javatodolistapp.Controllers.MainPageController">
+<AnchorPane prefHeight="394.0" prefWidth="635.0" xmlns="http://javafx.com/javafx/19.0.2.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.misskii.javatodolistapp.Controllers.MainPageController">
    <children>
       <Button layoutX="14.0" layoutY="41.0" mnemonicParsing="false" onAction="#switchToCreate" prefHeight="26.0" prefWidth="88.0" text="Add" />
       <Button layoutX="14.0" layoutY="78.0" mnemonicParsing="false" onAction="#switchToEdit" prefHeight="26.0" prefWidth="88.0" text="Edit" />
