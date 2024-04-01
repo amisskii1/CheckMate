@@ -5,12 +5,16 @@ import com.misskii.javatodolistapp.Models.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 
 import java.io.IOException;
 import java.sql.Date;
 
 public class EditPageController extends GeneralController {
+    @FXML
+    public ToggleGroup priority;
     @FXML
     private TextField taskID;
     @FXML
@@ -21,6 +25,15 @@ public class EditPageController extends GeneralController {
     private TextField taskExp;
     @FXML
     private CheckBox markDone;
+    @FXML
+    private RadioButton priority1;
+    @FXML
+    private RadioButton priority2;
+    @FXML
+    private RadioButton priority3;
+    @FXML
+    private RadioButton priorityDefault;
+
     private TaskDAO taskDAO = new TaskDAO();
 
     private Task task;

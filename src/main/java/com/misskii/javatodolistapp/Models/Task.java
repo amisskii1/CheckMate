@@ -8,7 +8,6 @@ public class Task {
     private Date date;
     private int personId;
     private int taskId;
-
     private String status;
 
     public Task() {
