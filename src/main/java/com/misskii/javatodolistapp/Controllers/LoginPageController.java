@@ -44,4 +44,8 @@ public class LoginPageController extends GeneralController {
                     "\nhttps://github.com/AntonMisskii/todolistApp/packages/1962002");
         }else version.setText("You're all up to date with the latest version!");
     }
+
+    public void switchToLicense(ActionEvent event) throws IOException {
+        changeScene(event, "license-page.fxml");
+    }
 }
