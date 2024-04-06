@@ -3,6 +3,7 @@ package com.misskii.javatodolistapp.DAO;
 import com.misskii.javatodolistapp.Models.Person;
 import com.misskii.javatodolistapp.Models.Task;
 import com.misskii.javatodolistapp.Util.DBUtil;
+import com.misskii.javatodolistapp.Util.PersonNotExistsException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,17 +12,15 @@ import java.util.List;
 public class PersonDAO {
     private final Connection connection = DBUtil.getConnection();
 
-    public int getPersonIdByEmail(String email) {
+    public int getPersonIdByEmail(String email) throws SQLException, PersonNotExistsException {
         int id = 0;
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT user_id FROM users WHERE user_email=?");
-            preparedStatement.setString(1, email);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
-                id = resultSet.getInt("user_id");
-            }
-        } catch (SQLException e){
-            e.printStackTrace();
+        PreparedStatement preparedStatement = connection.prepareStatement("SELECT user_id FROM users WHERE user_email=?");
+        preparedStatement.setString(1, email);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()){
+            id = resultSet.getInt("user_id");
+        }else {
+            throw new PersonNotExistsException();
         }
         return id;
     }
