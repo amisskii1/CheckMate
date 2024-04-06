@@ -10,28 +10,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LicenseClient {
-
-    private RestTemplate restTemplate;
-    private ObjectMapper mapper;
-    private String apiUrl = "http://localhost:8080/api";
-    private Map<String, String> jsonData;
-    private HttpEntity<Map<String, String>> request;
-
-    public String createTrialLicense(String userEmail) {
-        apiUrl = apiUrl + "/trial";
-        jsonData = new HashMap<>();
+    public String createTrialLicense(String userEmail) throws JsonProcessingException {
+        Map<String, String> jsonData = new HashMap<>();
         jsonData.put("userEmail", userEmail);
-        request = new HttpEntity<>(jsonData);
+        HttpEntity<Map<String, String>> request = new HttpEntity<>(jsonData);
         try {
-            restTemplate = new RestTemplate();
-            String response = restTemplate.postForObject(apiUrl, request, String.class);
-            mapper = new ObjectMapper();
+            RestTemplate restTemplate = new RestTemplate();
+            String response = restTemplate.postForObject("http://localhost:8080/api/trial", request, String.class);
+            ObjectMapper mapper = new ObjectMapper();
             JsonNode jsonNode = mapper.readTree(response);
-            return jsonNode.asText();
+            return jsonNode.get("licenseValue").asText();
         } catch (HttpClientErrorException.Forbidden ex) {
             String responseBody = ex.getResponseBodyAsString();
             try {
-                mapper = new ObjectMapper();
+                ObjectMapper mapper = new ObjectMapper();
                 JsonNode jsonNode = mapper.readTree(responseBody);
                 return jsonNode.get("errorMessage").asText();
             } catch (Exception e) {
@@ -44,14 +36,13 @@ public class LicenseClient {
     }
 
     public String validateLicenseKey(String userEmail, String licenseKey) throws JsonProcessingException {
-        apiUrl = apiUrl + "/validate";
-        jsonData = new HashMap<>();
+        Map<String, String> jsonData = new HashMap<>();
         jsonData.put("userEmail", userEmail);
         jsonData.put("licenseValue", licenseKey);
-        request = new HttpEntity<>(jsonData);
-        restTemplate = new RestTemplate();
-        String response = restTemplate.postForObject(apiUrl, request, String.class);
-        mapper = new ObjectMapper();
+        HttpEntity<Map<String, String>> request = new HttpEntity<>(jsonData);
+        RestTemplate restTemplate = new RestTemplate();
+        String response = restTemplate.postForObject("http://localhost:8080/api/validate", request, String.class);
+        ObjectMapper mapper = new ObjectMapper();
         JsonNode jsonNode = mapper.readTree(response);
         return jsonNode.asText();
     }

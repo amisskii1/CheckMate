@@ -27,10 +27,12 @@ public class LicensePageController extends GeneralController {
 
     public void getTrialLicense(ActionEvent event) throws IOException {
         if (email.getText().isEmpty()) displayError("Email field should not be empty");
-        if (Objects.equals(licenseClient.createTrialLicense(email.getText()), "Trial license can not be activated")){
-            displayError(licenseClient.createTrialLicense(email.getText()));
+        String licenseTrialResult = licenseClient.createTrialLicense(email.getText());
+        if (Objects.equals(licenseTrialResult, "Trial license can not be activated")){
+            displayError("Trial license can not be activated");
+            return;
         }
-        licenseDAO.save(email.getText(), licenseClient.createTrialLicense(email.getText()));
+        licenseDAO.save(email.getText(),licenseTrialResult);
         changeScene(event, "login-page.fxml");
     }
 
