@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpEntity;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
@@ -35,7 +36,7 @@ public class LicenseClient {
         return "";
     }
 
-    public String validateLicenseKey(String userEmail, String licenseKey) throws JsonProcessingException {
+    public String validateLicenseKey(String userEmail, String licenseKey) throws JsonProcessingException, ResourceAccessException {
         Map<String, String> jsonData = new HashMap<>();
         jsonData.put("userEmail", userEmail);
         jsonData.put("licenseValue", licenseKey);

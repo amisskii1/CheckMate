@@ -90,4 +90,14 @@ public class LicenseDAO {
         }
         return status;
     }
+
+    public void setLicenseStatusToFalse(int id) {
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE licenses SET license_status='false' WHERE user_id=?");
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
 }
