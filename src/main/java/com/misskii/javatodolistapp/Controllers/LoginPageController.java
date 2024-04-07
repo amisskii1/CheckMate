@@ -27,6 +27,10 @@ public class LoginPageController extends GeneralController {
     private final LicenseDAO licenseDAO = new LicenseDAO();
 
     public void switchToApp(ActionEvent event) throws IOException {
+        if (!isEmailFormatValid(userEmail.getText())) {
+            displayError("Email is not valid");
+            return;
+        }
         for (int i = 0; i < personDAO.loginUser().size(); i++) {
             if (Objects.equals(personDAO.loginUser().get(i).getEmail(), userEmail.getText())
                     && Objects.equals(personDAO.loginUser().get(i).getPassword(), userPassword.getText())) {

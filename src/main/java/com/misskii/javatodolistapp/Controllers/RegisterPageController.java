@@ -23,6 +23,10 @@ public class RegisterPageController extends GeneralController {
     private PersonDAO personDAO = new PersonDAO();
 
     public void createNewUser(ActionEvent event) throws IOException {
+        if (!isEmailFormatValid(userEmailField.getText())) {
+            displayError("Email is not valid");
+            return;
+        }
         List<String> emailsList = new ArrayList<>();
         if (userName.getText().isEmpty() || userEmailField.getText().isEmpty() || userPasswordField.getText().isEmpty() || userPasswordField2.getText().isEmpty()) {
             displayError("All fields must be filled in");

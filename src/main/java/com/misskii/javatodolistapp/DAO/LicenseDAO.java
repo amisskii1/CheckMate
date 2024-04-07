@@ -49,21 +49,6 @@ public class LicenseDAO {
         return licenseValue;
     }
 
-    public String getEmailByID(int id) {
-        String email = "";
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT user_email FROM licenses WHERE user_id=?");
-            preparedStatement.setInt(1,id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
-                email = resultSet.getString("user_email");
-            }
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-        return email;
-    }
-
     public void updateLicenseStatus(String validateLicenseKey, int id) {
         boolean status = Boolean.parseBoolean(validateLicenseKey);
         try {
