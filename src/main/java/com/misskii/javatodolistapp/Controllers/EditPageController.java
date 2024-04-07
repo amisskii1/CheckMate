@@ -1,11 +1,7 @@
 package com.misskii.javatodolistapp.Controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.misskii.javatodolistapp.DAO.LicenseDAO;
 import com.misskii.javatodolistapp.DAO.TaskDAO;
 import com.misskii.javatodolistapp.Models.Task;
-import com.misskii.javatodolistapp.Updater.Updater;
-import com.misskii.javatodolistapp.license.LicenseClient;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
@@ -50,7 +46,7 @@ public class EditPageController extends GeneralController {
             displayError("Id field should be filled");
             return;
         }
-        if (!isValidDate(taskExp.getText())){
+        if (!Objects.equals(taskExp.getText(), "") && !isValidDate(taskExp.getText())){
             displayError("Date field must be in format yyyy-MM-dd");
             return;
         }
@@ -107,7 +103,6 @@ public class EditPageController extends GeneralController {
     }
 
     public void cancel(ActionEvent event) throws IOException {
-        System.out.println(licenseStatus);
         switchToMainPage(event, licenseStatus);
     }
 
