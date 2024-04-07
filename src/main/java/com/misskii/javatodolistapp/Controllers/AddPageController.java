@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.sql.Date;
 
 public class AddPageController extends GeneralController {
+    private boolean licenseStatus;
     @FXML
     public ToggleGroup priority;
     @FXML
@@ -38,7 +39,7 @@ public class AddPageController extends GeneralController {
         }
         taskDAO.createNewTask(new Task(taskTitle.getText(), taskDescription.getText(), Date.valueOf(taskDate.getText()),
                 currentUser(getUserId()) + 1, "In Progress", setPriority()));
-        switchToMainPage(event);
+        switchToMainPage(event, this.licenseStatus);
     }
 
     public String setPriority(){
@@ -53,6 +54,23 @@ public class AddPageController extends GeneralController {
     }
 
     public void cancel(ActionEvent event) throws IOException {
-        switchToMainPage(event);
+        switchToMainPage(event, this.licenseStatus);
+    }
+
+    public boolean isLicenseStatus() {
+        return licenseStatus;
+    }
+
+    public void setLicenseStatus(boolean licenseStatus) {
+        this.licenseStatus = licenseStatus;
+    }
+
+    public void checkLicense(boolean status) {
+        priorityDefault.setSelected(true);
+        if (!status){
+            priority1.setDisable(true);
+            priority2.setDisable(true);
+            priority3.setDisable(true);
+        }
     }
 }

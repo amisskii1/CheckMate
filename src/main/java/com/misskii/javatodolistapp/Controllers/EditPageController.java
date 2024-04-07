@@ -1,7 +1,11 @@
 package com.misskii.javatodolistapp.Controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.misskii.javatodolistapp.DAO.LicenseDAO;
 import com.misskii.javatodolistapp.DAO.TaskDAO;
 import com.misskii.javatodolistapp.Models.Task;
+import com.misskii.javatodolistapp.Updater.Updater;
+import com.misskii.javatodolistapp.license.LicenseClient;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
@@ -11,8 +15,11 @@ import javafx.scene.control.ToggleGroup;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.util.Objects;
 
 public class EditPageController extends GeneralController {
+    private int userId;
+    private boolean licenseStatus;
     @FXML
     public ToggleGroup priority;
     @FXML
@@ -34,10 +41,9 @@ public class EditPageController extends GeneralController {
     @FXML
     private RadioButton priorityDefault;
 
-    private TaskDAO taskDAO = new TaskDAO();
+    private final TaskDAO taskDAO = new TaskDAO();
 
     private Task task;
-
 
     public void confChangeTask(ActionEvent event) throws IOException {
         if(taskID.getText().isEmpty()){
@@ -86,7 +92,7 @@ public class EditPageController extends GeneralController {
             taskDAO.updateTaskByID(currentUser(getUserId())+1 ,taskID.getText(), taskDesk.getText(),
                     taskTitle.getText(), Date.valueOf(taskExp.getText()), status, setPriority());
         }
-        switchToMainPage(event);
+        switchToMainPage(event, licenseStatus);
     }
 
     public String setPriority(){
@@ -101,6 +107,20 @@ public class EditPageController extends GeneralController {
     }
 
     public void cancel(ActionEvent event) throws IOException {
-        switchToMainPage(event);
+        System.out.println(licenseStatus);
+        switchToMainPage(event, licenseStatus);
+    }
+
+    public void setLicenseStatus(boolean licenseStatus) {
+        this.licenseStatus = licenseStatus;
+    }
+
+    public void checkLicense(boolean status) {
+        priorityDefault.setSelected(true);
+        if (!status){
+            priority1.setDisable(true);
+            priority2.setDisable(true);
+            priority3.setDisable(true);
+        }
     }
 }

@@ -2,7 +2,6 @@ package com.misskii.javatodolistapp.DAO;
 
 import com.misskii.javatodolistapp.Util.DBUtil;
 import com.misskii.javatodolistapp.Util.PersonNotExistsException;
-import org.postgresql.util.PSQLException;
 
 import java.sql.*;
 
@@ -32,5 +31,63 @@ public class LicenseDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public String getLicenseValueByUserID(int userId) {
+        String licenseValue = "";
+        try {
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement("SELECT license_value FROM licenses WHERE user_id=?");
+            preparedStatement.setInt(1, userId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                licenseValue = resultSet.getString("license_value");
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return licenseValue;
+    }
+
+    public String getEmailByID(int id) {
+        String email = "";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT user_email FROM licenses WHERE user_id=?");
+            preparedStatement.setInt(1,id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                email = resultSet.getString("user_email");
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return email;
+    }
+
+    public void updateLicenseStatus(String validateLicenseKey, int id) {
+        boolean status = Boolean.parseBoolean(validateLicenseKey);
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE licenses SET license_status=? WHERE user_id=?");
+            preparedStatement.setBoolean(1,status);
+            preparedStatement.setInt(2, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public boolean getLicenseStatus(int id) {
+        boolean status = false;
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT license_status FROM licenses WHERE user_id=?");
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                status = resultSet.getBoolean("license_status");
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return status;
     }
 }

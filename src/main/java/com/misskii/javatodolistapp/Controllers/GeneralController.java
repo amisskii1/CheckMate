@@ -1,6 +1,5 @@
 package com.misskii.javatodolistapp.Controllers;
 
-import com.misskii.javatodolistapp.Controllers.MainPageController;
 import com.misskii.javatodolistapp.DAO.PersonDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -33,11 +32,12 @@ public class GeneralController {
         }
         return currentUser;
     }
-    public void switchToMainPage(ActionEvent event) throws IOException {
+    public void switchToMainPage(ActionEvent event, boolean status) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/misskii/javatodolistapp/main-page.fxml"));
         root = loader.load();
         MainPageController mainPageController = loader.getController();
         mainPageController.displayUser(personDAO.loginUser().get(currentUser(getUserId())).getId());
+        mainPageController.setLicenseStatus(status);
         mainPageController.fillTable();
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
@@ -45,11 +45,12 @@ public class GeneralController {
         stage.show();
     }
 
-    public void switchToMainPage(ActionEvent event, int id) throws IOException {
+    public void switchToMainPage(ActionEvent event, int id, boolean status) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/misskii/javatodolistapp/main-page.fxml"));
         root = loader.load();
         MainPageController mainPageController = loader.getController();
         mainPageController.displayUser(personDAO.loginUser().get(id).getId());
+        mainPageController.setLicenseStatus(status);
         mainPageController.fillTable();
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
@@ -57,11 +58,29 @@ public class GeneralController {
         stage.show();
     }
 
-    public void switchFromMainPage(ActionEvent event, String fxml, int id) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/misskii/javatodolistapp/"+fxml));
+
+    public void switchToEditPage(ActionEvent event, int id, boolean status) throws IOException {
+        System.out.println(status);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/misskii/javatodolistapp/edit-page.fxml"));
         root = loader.load();
-        GeneralController generalController = loader.getController();
-        generalController.setUserId(id);
+        EditPageController editPageController = loader.getController();
+        editPageController.setUserId(id);
+        editPageController.setLicenseStatus(status);
+        editPageController.checkLicense(status);
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene=new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void switchToCreatePage(ActionEvent event, int id, boolean status) throws IOException {
+        System.out.println(status);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/misskii/javatodolistapp/add-page.fxml"));
+        root = loader.load();
+        AddPageController addPageController = loader.getController();
+        addPageController.setUserId(id);
+        addPageController.setLicenseStatus(status);
+        addPageController.checkLicense(status);
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene=new Scene(root);
         stage.setScene(scene);
@@ -82,6 +101,13 @@ public class GeneralController {
         errorAlert.setHeaderText("Input not valid");
         errorAlert.setContentText(errorMessage);
         errorAlert.showAndWait();
+    }
+
+    public void displayLicenseConfirmation(String licenseMessage){
+        Alert licenseAlert = new Alert(Alert.AlertType.INFORMATION);
+        licenseAlert.setHeaderText("License information");
+        licenseAlert.setContentText(licenseMessage);
+        licenseAlert.showAndWait();
     }
 
     public void openStage(String fxml) throws IOException {

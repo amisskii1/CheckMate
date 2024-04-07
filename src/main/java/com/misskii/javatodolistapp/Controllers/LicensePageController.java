@@ -54,7 +54,6 @@ public class LicensePageController extends GeneralController {
         } catch (SQLException e) {
             displayError("Trial license can not be activated");
         } catch (PersonNotExistsException e){
-            System.out.println("afafafa");
             displayError("User with this email does not exist");
             return;
         }
