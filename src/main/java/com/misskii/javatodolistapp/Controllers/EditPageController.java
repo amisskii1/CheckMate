@@ -46,50 +46,23 @@ public class EditPageController extends GeneralController {
             displayError("Id field should be filled");
             return;
         }
-        if (!Objects.equals(taskExp.getText(), "") && !isValidDate(taskExp.getText())){
+        if (!taskExp.getText().isEmpty() && !isValidDate(taskExp.getText())){
             displayError("Date field must be in format yyyy-MM-dd");
             return;
         }
         task = taskDAO.getTaskByID(taskID.getText());
-        String status = "In Progress";
-        if (markDone.isSelected()){
-            status = "Done";
+        if (task == null) {
+            displayError("Task with ID " + taskID.getText() + " not found");
+            return;
         }
-        if (taskDesk.getText().isEmpty()){
-            taskDAO.updateTaskByID(currentUser(getUserId())+1 ,taskID.getText(), task.getTaskDescription(),
-                    taskTitle.getText(), Date.valueOf(taskExp.getText()), status, setPriority());
-        }
-        if (taskTitle.getText().isEmpty()){
-            taskDAO.updateTaskByID(currentUser(getUserId())+1 ,taskID.getText(), task.getTaskDescription(),
-                    task.getTaskTitle(), Date.valueOf(taskExp.getText()), status, setPriority());
-        }
-        if (taskExp.getText().isEmpty()){
-            taskDAO.updateTaskByID(currentUser(getUserId())+1 ,taskID.getText(), task.getTaskDescription(),
-                    taskTitle.getText(), task.getDate(), status, setPriority());
-        }
-        if (taskDesk.getText().isEmpty() && taskTitle.getText().isEmpty()){
-            taskDAO.updateTaskByID(currentUser(getUserId())+1 ,taskID.getText(), task.getTaskDescription(),
-                    task.getTaskTitle(), Date.valueOf(taskExp.getText()), status, setPriority());
-        }
-        if (taskDesk.getText().isEmpty() && taskExp.getText().isEmpty()){
-            taskDAO.updateTaskByID(currentUser(getUserId())+1 ,taskID.getText(), task.getTaskDescription(),
-                    taskTitle.getText(), task.getDate(), status, setPriority());
-        }
-        if (taskTitle.getText().isEmpty() && taskExp.getText().isEmpty()){
-            taskDAO.updateTaskByID(currentUser(getUserId())+1 ,taskID.getText(), taskDesk.getText(),
-                    task.getTaskTitle(), task.getDate(), status, setPriority());
-        }
-        if (taskExp.getText().isEmpty() && taskTitle.getText().isEmpty()
-                && taskDesk.getText().isEmpty()) {
-            taskDAO.updateTaskByID(currentUser(getUserId())+1 ,taskID.getText(), task.getTaskDescription(),
-                    task.getTaskTitle(), task.getDate(), status, setPriority());
-        }
-        if (!taskDesk.getText().isEmpty() && !taskTitle.getText().isEmpty() && !taskExp.getText().isEmpty()){
-            taskDAO.updateTaskByID(currentUser(getUserId())+1 ,taskID.getText(), taskDesk.getText(),
-                    taskTitle.getText(), Date.valueOf(taskExp.getText()), status, setPriority());
-        }
+        String status = markDone.isSelected() ? "Done" : "In Progress";
+        String description = taskDesk.getText().isEmpty() ? task.getTaskDescription() : taskDesk.getText();
+        String title = taskTitle.getText().isEmpty() ? task.getTaskTitle() : taskTitle.getText();
+        Date expirationDate = taskExp.getText().isEmpty() ? task.getDate() : Date.valueOf(taskExp.getText());
+        taskDAO.updateTaskByID(currentUser(getUserId()) + 1, taskID.getText(), description, title, expirationDate, status, setPriority());
         switchToMainPage(event, licenseStatus);
     }
+
 
     public String setPriority(){
         if (priority1.isSelected()){
