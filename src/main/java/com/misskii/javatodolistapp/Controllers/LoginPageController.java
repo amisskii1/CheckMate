@@ -12,6 +12,10 @@ import javafx.scene.control.TextField;
 import org.springframework.web.client.ResourceAccessException;
 
 import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
 import java.util.Objects;
 
 public class LoginPageController extends GeneralController {
