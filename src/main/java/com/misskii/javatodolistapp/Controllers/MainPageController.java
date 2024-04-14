@@ -18,7 +18,7 @@ import java.util.Objects;
 
 public class MainPageController extends GeneralController {
     private int userId;
-    private boolean licenseStatus;
+    private String licenseStatus;
     @FXML
     private TableView<Task> table;
     @FXML
@@ -46,8 +46,8 @@ public class MainPageController extends GeneralController {
         table.setItems(tasks);
     }
 
-    public void setCellFactoryBasedOnLicenseStatus(boolean status){
-        if (status){
+    public void setCellFactoryBasedOnLicenseStatus(String status){
+        if (Objects.equals(status, "valid")){
             setCellFactoryForColumn(tableId);
             setCellFactoryForColumn(tableTitle);
             setCellFactoryForColumn(tableDescription);
@@ -100,7 +100,7 @@ public class MainPageController extends GeneralController {
         }
         return "";
     }
-    public void setLicenseStatus(boolean licenseStatus) {
+    public void setLicenseStatus(String licenseStatus) {
         this.licenseStatus = licenseStatus;
     }
 }

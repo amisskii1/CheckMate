@@ -6,7 +6,10 @@ import org.springframework.http.HttpEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class LicenseClient {
@@ -35,7 +38,7 @@ public class LicenseClient {
         return "";
     }
 
-    public String validateLicenseKey(String userEmail, String licenseKey) throws JsonProcessingException, ResourceAccessException {
+    public List<String> validateLicenseKey(String userEmail, String licenseKey) throws JsonProcessingException, ResourceAccessException {
         Map<String, String> jsonData = new HashMap<>();
         jsonData.put("userEmail", userEmail);
         jsonData.put("licenseValue", licenseKey);
@@ -44,6 +47,9 @@ public class LicenseClient {
         String response = restTemplate.postForObject("https://localhost:8443/api/validate", request, String.class);
         ObjectMapper mapper = new ObjectMapper();
         JsonNode jsonNode = mapper.readTree(response);
-        return jsonNode.asText();
+        List<String> jsonResult = new ArrayList<>();
+        jsonResult.add(jsonNode.get("licenseStatus").asText());
+        jsonResult.add(jsonNode.get("expiredDate").asText());
+        return jsonResult;
     }
 }

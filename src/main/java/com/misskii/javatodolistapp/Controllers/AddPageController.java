@@ -10,9 +10,10 @@ import javafx.scene.control.ToggleGroup;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.util.Objects;
 
 public class AddPageController extends GeneralController {
-    private boolean licenseStatus;
+    private String licenseStatus;
     @FXML
     public ToggleGroup priority;
     @FXML
@@ -57,17 +58,17 @@ public class AddPageController extends GeneralController {
         switchToMainPage(event, this.licenseStatus);
     }
 
-    public boolean isLicenseStatus() {
+    public String isLicenseStatus() {
         return licenseStatus;
     }
 
-    public void setLicenseStatus(boolean licenseStatus) {
+    public void setLicenseStatus(String licenseStatus) {
         this.licenseStatus = licenseStatus;
     }
 
-    public void checkLicense(boolean status) {
+    public void checkLicense(String status) {
         priorityDefault.setSelected(true);
-        if (!status){
+        if (!Objects.equals(status, "valid")){
             priority1.setDisable(true);
             priority2.setDisable(true);
             priority3.setDisable(true);

@@ -15,7 +15,7 @@ import java.util.Objects;
 
 public class EditPageController extends GeneralController {
     private int userId;
-    private boolean licenseStatus;
+    private String licenseStatus;
     @FXML
     public ToggleGroup priority;
     @FXML
@@ -79,13 +79,13 @@ public class EditPageController extends GeneralController {
         switchToMainPage(event, licenseStatus);
     }
 
-    public void setLicenseStatus(boolean licenseStatus) {
+    public void setLicenseStatus(String licenseStatus) {
         this.licenseStatus = licenseStatus;
     }
 
-    public void checkLicense(boolean status) {
+    public void checkLicense(String status) {
         priorityDefault.setSelected(true);
-        if (!status){
+        if (!Objects.equals(status, "valid")){
             priority1.setDisable(true);
             priority2.setDisable(true);
             priority3.setDisable(true);

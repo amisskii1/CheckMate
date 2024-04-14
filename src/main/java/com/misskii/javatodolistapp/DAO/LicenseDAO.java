@@ -4,6 +4,8 @@ import com.misskii.javatodolistapp.Util.DBUtil;
 import com.misskii.javatodolistapp.Util.PersonNotExistsException;
 
 import java.sql.*;
+import java.time.LocalDateTime;
+import java.time.chrono.ChronoLocalDateTime;
 
 public class LicenseDAO {
     private final Connection connection = DBUtil.getConnection();
@@ -49,26 +51,26 @@ public class LicenseDAO {
         return licenseValue;
     }
 
-    public void updateLicenseStatus(String validateLicenseKey, int id) {
-        boolean status = Boolean.parseBoolean(validateLicenseKey);
+    public void updateLicenseStatus(String licenseStatus, LocalDateTime expireDate , int id) {
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE licenses SET license_status=? WHERE user_id=?");
-            preparedStatement.setBoolean(1,status);
-            preparedStatement.setInt(2, id);
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE licenses SET license_status=?, expire_date=? WHERE user_id=?");
+            preparedStatement.setString(1, licenseStatus);
+            preparedStatement.setTimestamp(2, Timestamp.valueOf(expireDate));
+            preparedStatement.setInt(3, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e){
             e.printStackTrace();
         }
     }
 
-    public boolean getLicenseStatus(int id) {
-        boolean status = false;
+    public String getLicenseStatus(int id) {
+        String status = "invalid";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT license_status FROM licenses WHERE user_id=?");
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
-                status = resultSet.getBoolean("license_status");
+                status = resultSet.getString("license_status");
             }
         }catch (SQLException e){
             e.printStackTrace();
@@ -82,6 +84,32 @@ public class LicenseDAO {
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
         }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public ChronoLocalDateTime<?> getExpireDate(int id) {
+        LocalDateTime expireDate = null;
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT expire_date FROM licenses WHERE user_id=?");
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                expireDate = resultSet.getTimestamp("expire_date").toLocalDateTime();
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return expireDate;
+    }
+
+    public void updateLicenseStatus(String licenseStatus, int id) {
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE licenses SET license_status=? WHERE user_id=?");
+            preparedStatement.setString(1, licenseStatus);
+            preparedStatement.setInt(2, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e){
             e.printStackTrace();
         }
     }

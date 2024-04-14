@@ -16,6 +16,9 @@ import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 public class LoginPageController extends GeneralController {
@@ -39,12 +42,15 @@ public class LoginPageController extends GeneralController {
             if (Objects.equals(personDAO.loginUser().get(i).getEmail(), userEmail.getText())
                     && Objects.equals(personDAO.loginUser().get(i).getPassword(), userPassword.getText())) {
                 try {
-                    licenseDAO.updateLicenseStatus( licenseClient.validateLicenseKey(userEmail.getText(), licenseDAO.getLicenseValueByUserID(i+1)), i+1);
+                    List<String> licenseData = licenseClient.validateLicenseKey(userEmail.getText(), licenseDAO.getLicenseValueByUserID(i+1));
+                    licenseDAO.updateLicenseStatus(licenseData.get(0), LocalDateTime.parse(licenseData.get(1)),i+1);
                 }catch (ResourceAccessException e){
-                    licenseDAO.setLicenseStatusToFalse(i+1);
+                    if (!LocalDateTime.now().isBefore(licenseDAO.getExpireDate(i+1))){
+                        licenseDAO.updateLicenseStatus("invalid", i+1);
+                    }
                 }
-                boolean licenseStatus = licenseDAO.getLicenseStatus(i+1);
-                if (licenseStatus){
+                String licenseStatus = licenseDAO.getLicenseStatus(i+1);
+                if (Objects.equals(licenseStatus, "valid")){
                     displayLicenseConfirmation("Your license is active and valid");
                 }else{
                     displayLicenseConfirmation("Your license is not active or invalid");

@@ -32,7 +32,7 @@ public class GeneralController {
         }
         return currentUser;
     }
-    public void switchToMainPage(ActionEvent event, boolean status) throws IOException {
+    public void switchToMainPage(ActionEvent event, String status) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/misskii/javatodolistapp/main-page.fxml"));
         root = loader.load();
         MainPageController mainPageController = loader.getController();
@@ -45,7 +45,7 @@ public class GeneralController {
         stage.show();
     }
 
-    public void switchToMainPage(ActionEvent event, int id, boolean status) throws IOException {
+    public void switchToMainPage(ActionEvent event, int id, String status) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/misskii/javatodolistapp/main-page.fxml"));
         root = loader.load();
         MainPageController mainPageController = loader.getController();
@@ -59,8 +59,7 @@ public class GeneralController {
     }
 
 
-    public void switchToEditPage(ActionEvent event, int id, boolean status) throws IOException {
-        System.out.println(status);
+    public void switchToEditPage(ActionEvent event, int id, String status) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/misskii/javatodolistapp/edit-page.fxml"));
         root = loader.load();
         EditPageController editPageController = loader.getController();
@@ -73,8 +72,7 @@ public class GeneralController {
         stage.show();
     }
 
-    public void switchToCreatePage(ActionEvent event, int id, boolean status) throws IOException {
-        System.out.println(status);
+    public void switchToCreatePage(ActionEvent event, int id, String status) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/misskii/javatodolistapp/add-page.fxml"));
         root = loader.load();
         AddPageController addPageController = loader.getController();
