@@ -18,6 +18,7 @@
             <TableColumn fx:id="tableStatus" prefWidth="63.99993896484375" text="Status" />
         </columns>
       </TableView>
-      <Button layoutX="15.0" layoutY="359.0" mnemonicParsing="false" onAction="#aboutStage" prefHeight="26.0" prefWidth="88.0" text="About" />
+      <Button layoutX="14.0" layoutY="301.0" mnemonicParsing="false" onAction="#aboutStage" prefHeight="26.0" prefWidth="88.0" text="About" />
+      <Button layoutX="14.0" layoutY="344.0" mnemonicParsing="false" onAction="#logout" prefHeight="26.0" prefWidth="88.0" text="Logout" />
    </children>
 </AnchorPane>

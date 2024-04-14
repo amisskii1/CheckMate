@@ -103,4 +103,12 @@ public class MainPageController extends GeneralController {
     public void setLicenseStatus(String licenseStatus) {
         this.licenseStatus = licenseStatus;
     }
+
+    public void logout(ActionEvent event) {
+        try {
+            changeScene(event, "login-page.fxml");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
